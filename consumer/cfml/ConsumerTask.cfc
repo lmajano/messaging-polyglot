@@ -19,8 +19,16 @@ component accessors="true"{
 		while( !variables.app.stopTasks ){
 			writeDump( var="Consumer (#variables.id#) waiting for messages...", output="console" );
 
-			var delivery = variables.consumer.nextDelivery();
-			var message  = toString( delivery.getBody() );
+			try{
+				var delivery = variables.consumer.nextDelivery();
+				var message  = toString( delivery.getBody() );
+
+				// Manual Ack, meaning the consumer has worked on it and bytes have made it here.
+				variables.consumer.getChannel().basicAck( delivery.getEnvelope().getDeliveryTag(), javaCast( "Boolean", false ) );
+			}
+			catch(Any e){
+				writeDump( var="Error retrieving message: #e.detail# #e.message#", output="console" );
+			}
 
 			writeDump( var="Consumer (#variables.id#) got #message#", output="console" );
 		}
