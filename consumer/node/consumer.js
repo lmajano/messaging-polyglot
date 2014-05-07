@@ -14,14 +14,14 @@ stocks_server.on('connection', function(client) {
 
 // AMQP Adapter
 function amqp_connect(client) {
-    var connection = amqp.createConnection({'host': '127.0.0.1', 'port': 5672});
+    var connection = amqp.createConnection({'host': '127.0.0.1', 'port': 5672, 'username' : 'guest', 'password' : 'guest'});
 
     connection.on('ready', function() {
         var args = {'exclusive': true, 'autoDelete': true};
 
         connection.queue('', args,
                          function(queue) {
-                             queue.bind('amq.direct', 'stock.prices');
+                             queue.bind('stock.prices');
                              queue.subscribe(function(message) {
                                  client.write(message.data.toString());
                              });

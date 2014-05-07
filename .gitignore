@@ -1,2 +1,5 @@
 /producer/java/target/
 /consumer/java/target/
+/consumer/node/nbproject/private/
+project.xml
+project.properties
