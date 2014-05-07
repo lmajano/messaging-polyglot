@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>STOMP RabbitMQ</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="sockjs-latest.min.js"></script>
+		<script src="node_modules/stompjs/lib/stomp.min.js" type="text/javascript"></script>
+		<script>
+			var ws = new SockJS( 'http://127.0.0.1:15674/stomp' );
+			var client = Stomp.over( ws );
+			
+			var on_connect = function() {
+				console.log('connected');
+				client.subscribe( "/exchange/amq.direct/stock.prices", function( message ){
+					if( message.body ){
+						price( message.body );
+					}
+				})
+			};
+			var on_error =  function() {
+				console.log('error');
+			};
+			
+			function price(data) {
+				var price_data = data.split(',');
+				var elem = document.getElementById(price_data[0]);
+				elem.innerHTML = price_data[1];
+			  };
+
+			client.connect( 'guest', 'guest', on_connect, on_error, '/' );
+		</script>
+	</head>
+	<style type="text/css">
+      .container{
+        border-collapse: separate;
+        border-spacing: 30px;
+        width: 960px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .row {
+        display:table-row;
+      }
+      .price {
+        display:table-cell;
+        background-color: grey;
+        height: 200px;
+        width: 200px;
+        border-radius: 15px;
+        padding: 5px;
+
+      }
+      .price h1 {
+        font-family: Helvetica;
+        font-size: 36pt;
+        text-align: center;
+      }
+
+      .price div {
+        font-family: Helvetica;
+        font-size: 20pt;
+        text-align: center;
+      }
+    </style>
+	<body>
+		<div class="container">
+			<div class="row">
+			  <div class="price">
+				<h1>AAPL</h1>
+				<div id="AAPL">-</div>
+			  </div>
+			  <div class="price">
+				<h1>GOOG</h1>
+				<div id="GOOG">-</div>
+			  </div>
+			  <div class="price">
+				<h1>VMW</h1>
+				<div id="VMW">-</div>
+			  </div>
+			</div>
+		</div>
+	</body>
+</html>

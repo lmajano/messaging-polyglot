@@ -3,3 +3,5 @@
 /consumer/node/nbproject/private/
 project.xml
 project.properties
+/consumer/stomp/AMQP Stomp Consumer/nbproject/private/
+/consumer/stomp/nbproject/private/
