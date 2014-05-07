@@ -14,7 +14,7 @@ stocks_server.on('connection', function(client) {
 
 // AMQP Adapter
 function amqp_connect(client) {
-    var connection = amqp.createConnection({'host': '127.0.0.1', 'port': 5672, 'username' : 'guest', 'password' : 'guest'});
+    var connection = amqp.createConnection({'host': '127.0.0.1', 'port': 5672});
 
     connection.on('ready', function() {
         var args = {'exclusive': true, 'autoDelete': true};
