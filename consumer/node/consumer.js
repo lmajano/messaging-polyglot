@@ -24,10 +24,10 @@ function amqp_connect( client ){
 	
 	// on ready consume
     connection.on('ready', function() {
-        var args = { 'exclusive': true, 'autoDelete': true };
+        var args = { 'exclusive': false, 'autoDelete': false, 'durable' : true };
 
-        connection.queue( '', args, function(queue) {
-			queue.bind( 'amq.direct', 'stock.prices' );
+        connection.queue( 'stock.prices', args, function( queue ) {
+			//queue.bind( '', 'stock.prices' );
 			queue.subscribe( function( message, headers, deliveryInfo, messageObject ){
 				// Write it out to the socket
 				client.write( message.data.toString() );
