@@ -1,6 +1,6 @@
 component{
 
-	variables.TICKER_SYMBOLS = [ "GOOG", "VWM", "AAPL" ];
+	variables.TICKER_SYMBOLS = [ "GOOG", "VMW", "AAPL" ];
 
 	function init(){
 		variables.random = createObject( "java", "java.util.Random" ).init();

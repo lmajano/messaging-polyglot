@@ -23,7 +23,7 @@ component accessors="true"{
 			var price = variables.priceGenerator.nextPrice();
 			writeDump( var="Producing: #price#", output="console" );
 
-			variables.channel.basicPublish( "", 
+			variables.channel.basicPublish( "amq.direct", 
 											"stock.prices", 
 											javaCast( "null", ""),
 											price.getBytes() );
