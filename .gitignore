@@ -5,3 +5,5 @@ project.xml
 project.properties
 /consumer/stomp/AMQP Stomp Consumer/nbproject/private/
 /consumer/stomp/nbproject/private/
+/consumer/groovy/nbproject/private/
+/consumer/groovy/build/
