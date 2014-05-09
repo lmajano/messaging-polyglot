@@ -3,6 +3,14 @@
 	
 	// Create new channel for this interaction
 	application.channel = application.connection.createChannel();
+
+	// Crete Queue just in case
+	application.channel.queueDeclare( "stock.prices", 
+						  javaCast( "boolean", true ), 
+						  javaCast( "boolean", false), 
+						  javaCast( "boolean", false), 
+						  javaCast( "null", "" ) );
+
 	// create task
 	producerTask = createDynamicProxy( new ProducerTask( application.channel ), [ "java.lang.Runnable" ] );
 	
