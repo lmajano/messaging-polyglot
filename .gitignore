@@ -7,3 +7,4 @@ project.properties
 /consumer/stomp/nbproject/private/
 /consumer/groovy/nbproject/private/
 /consumer/groovy/build/
+/consumer/groovy/dist/

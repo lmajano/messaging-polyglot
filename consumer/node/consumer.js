@@ -1,8 +1,8 @@
-var http        = require('http');
-var sockjs      = require('sockjs');
-var amqp        = require('amqp');
-var node_static = require('node-static');
-var util        = require('util');
+var http        = require( 'http' );
+var sockjs      = require( 'sockjs' );
+var amqp        = require( 'amqp' );
+var node_static = require( 'node-static' );
+var util        = require( 'util' );
 
 var sockjs_opts = { sockjs_url: "http://cdn.sockjs.org/sockjs-0.2.min.js" };
 
@@ -15,6 +15,7 @@ stocks_server.on('connection', function( client ) {
 
 // AMQP Adapter
 function amqp_connect( client ){
+	// Connect to RabbitMQ
     var connection = amqp.createConnection({ 
 		'host'	: 'localhost', 
 		'port'	: 5672,
@@ -24,7 +25,7 @@ function amqp_connect( client ){
 	
 	// on ready consume
     connection.on('ready', function() {
-        var args = { 'exclusive': false, 'autoDelete': false, 'durable' : true };
+        var args = { 'exclusive': false, 'autoDelete': true, 'durable' : false };
 
         connection.queue( 'stock.prices', args, function( queue ) {
 			//queue.bind( '', 'stock.prices' );

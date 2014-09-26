@@ -6,9 +6,9 @@
 
 	// Crete Queue
 	application.channel.queueDeclare( "stock.prices", 
+						  javaCast( "boolean", false ), 
+						  javaCast( "boolean", false ), 
 						  javaCast( "boolean", true ), 
-						  javaCast( "boolean", false), 
-						  javaCast( "boolean", false), 
 						  javaCast( "null", "" ) );
 
 	// Create a new queue consumer

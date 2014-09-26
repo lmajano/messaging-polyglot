@@ -6,9 +6,9 @@
 
 	// Crete Queue just in case
 	application.channel.queueDeclare( "stock.prices", 
+						  javaCast( "boolean", false ), 
+						  javaCast( "boolean", false ), 
 						  javaCast( "boolean", true ), 
-						  javaCast( "boolean", false), 
-						  javaCast( "boolean", false), 
 						  javaCast( "null", "" ) );
 
 	// create task

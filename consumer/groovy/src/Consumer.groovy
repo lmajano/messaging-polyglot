@@ -11,7 +11,7 @@ def channel		= connection.createChannel()
 
 def queueName = 'stock.prices'
 
-channel.queueDeclare queueName, true, false, false, null
+channel.queueDeclare queueName, false, false, true, null
 
 def consumer = new QueueingConsumer( channel )
 channel.basicConsume queueName, consumer

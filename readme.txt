@@ -38,5 +38,8 @@ Stomp Plugin For RabbitMQ URL
 http://127.0.0.1:15674/stomp
 Valid destination types are: /temp-queue, /exchange, /topic, /queue, /amq/queue, /reply-queue/.
 
+Use /queue for durable queues
+Use /amq/queque for default exchange and non-durable queues
+
 AMQP Node Library Used
 https://github.com/postwait/node-amqp

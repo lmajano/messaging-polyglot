@@ -12,7 +12,7 @@
 			
 			var on_connect = function() {
 				console.log('connected');
-				client.subscribe( "/queue/stock.prices", function( message ){
+				client.subscribe( "/amq/queue/stock.prices", function( message ){
 					if( message.body ){
 						price( message.body );
 					}
