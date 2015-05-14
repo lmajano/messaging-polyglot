@@ -25,12 +25,13 @@ component accessors="true"{
 
 				// Manual Ack, meaning the consumer has worked on it and bytes have made it here.
 				variables.consumer.getChannel().basicAck( delivery.getEnvelope().getDeliveryTag(), javaCast( "Boolean", false ) );
+
+				writeDump( var="Consumer (#variables.id#) got #message#", output="console" );
 			}
 			catch(Any e){
 				writeDump( var="Error retrieving message: #e.detail# #e.message#", output="console" );
+				variables.app.stopTasks = true;
 			}
-
-			writeDump( var="Consumer (#variables.id#) got #message#", output="console" );
 		}
 
 		writeDump( var="Stopping Task : #variables.id#", output="console" );

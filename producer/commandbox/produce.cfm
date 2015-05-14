@@ -29,6 +29,6 @@ while( true ){
 		javaCast( "null", ""),
 		price.getBytes() 
 	);
-	sleep( 500 );
+	//sleep( 500 );
 }
 </cfscript>

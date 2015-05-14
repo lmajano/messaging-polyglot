@@ -34,13 +34,11 @@ final class PublishTask implements Runnable {
 				channel.basicPublish( "", "stock.prices", null, price.getBytes() );
 				
 				// sleep for a bit
-                Thread.sleep(500);
+               // Thread.sleep(500);
 				
             } catch( IOException e ){
                 e.printStackTrace();
-            } catch( InterruptedException e ){
-                Thread.currentThread().interrupt();
-            }
+			}
 			
         }
     }
