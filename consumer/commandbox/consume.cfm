@@ -30,12 +30,11 @@ while( true ){
 
 		// Manual Ack, meaning the consumer has worked on it and bytes have made it here.
 		//consumer.getChannel().basicAck( delivery.getEnvelope().getDeliveryTag(), javaCast( "Boolean", false ) );
+		SystemOutput( "Got #message#" & chr( 10 ) );
 	}
 	catch(Any e){
-		SystemOutput( "Error retrieving message: #e.detail# #e.message#" );
-		abort;
+		//SystemOutput( "Error retrieving message: #e.detail# #e.message#. Trying again." );
+		SystemOutput( "Error getting message, trying again..." );
 	}
-
-	SystemOutput( "Got #message#" & chr( 10 ) );
 }
 </cfscript>

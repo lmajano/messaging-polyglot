@@ -1,8 +1,6 @@
-========================================================================
-RabbitMQ Messaging Polyglot by Luis Majano <lmajano@ortussolutions.com>
-========================================================================
+# RabbitMQ Messaging Polyglot by Luis Majano <lmajano@ortussolutions.com>
 
-This project was originally forked from Rob Harrop
+> This project was originally forked from Rob Harrop
 https://github.com/robharrop/presentations
 
 # Rabbit MQ
