@@ -1,9 +1,9 @@
 # Consumer Dependencies
 /consumer/java/target/
+/consumer/commandbox/lib/amqp-client-*
+/consumer/stomp/node_modules/**
 
 /consumer/node/nbproject/private/
-/consumer/stomp/AMQP Stomp Consumer/nbproject/private/
-/consumer/stomp/nbproject/private/
 
 # Producer Dependencies
 /producer/java/target/

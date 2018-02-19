@@ -3,61 +3,54 @@
 	<head>
 		<title>STOMP RabbitMQ</title>
 		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<script src="sockjs-latest.min.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!-- Stomp Library -->
 		<script src="node_modules/stompjs/lib/stomp.min.js" type="text/javascript"></script>
+		<!-- My App -->
 		<script>
-			var ws = new SockJS( 'http://127.0.0.1:15674/stomp' );
+			var ws = new WebSocket( 'ws://127.0.0.1:15674/ws' );
 			var client = Stomp.over( ws );
-			
-			var on_connect = function() {
-				console.log('connected');
+
+			var on_connect = function(){
+				console.log( 'connected' );
 				client.subscribe( "/amq/queue/stock.prices", function( message ){
 					if( message.body ){
+						// Emit it
 						price( message.body );
 					}
 				});
 			};
-			var on_error =  function() {
-				console.log('error');
+			var on_error = function(){
+				console.log( 'error' );
 			};
 			
-			function price(data) {
+			function price( data ){
 				var price_data = data.split(',');
 				var elem = document.getElementById(price_data[0]);
 				elem.innerHTML = price_data[1];
 			  };
 
-			client.connect( 'guest', 'guest', on_connect, on_error, '/' );
+			client.connect( 'rabbitmq', 'rabbitmq', on_connect, on_error, '/' );
 		</script>
 	</head>
-	<style type="text/css">
-      .container{
-        border-collapse: separate;
-        border-spacing: 30px;
-        width: 960px;
-        margin-left: auto;
-        margin-right: auto;
-      }
 
-      .row {
-        display:table-row;
-      }
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<style type="text/css">
       .price {
-        display:table-cell;
         background-color: #add8e6;
         height: 200px;
         width: 200px;
         border-radius: 15px;
         padding: 5px;
-
+		margin: 5px;
       }
       .price h1 {
         font-family: Helvetica;
         font-size: 36pt;
         text-align: center;
       }
-
       .price div {
         font-family: Helvetica;
         font-size: 20pt;
@@ -66,16 +59,26 @@
     </style>
 	<body>
 		<div class="container">
-			<div class="row">
-			  <div class="price">
+			<div class="jumbotron">
+				<h1 class="display-4">Welcome to Messaging!</h1>
+				<p class="lead">
+					This example leverages <code>stompjs</code> via websockets to consume RabbitMQ messages
+				</p>
+			</div>
+
+			<div class="row mx-auto">
+
+			  <div class="col-sm price">
 				<h1>AAPL</h1>
 				<div id="AAPL">-</div>
 			  </div>
-			  <div class="price">
+
+			  <div class="col-sm price">
 				<h1>ORTUS</h1>
 				<div id="ORTUS">-</div>
 			  </div>
-			  <div class="price">
+
+			  <div class="col-sm price">
 				<h1>VMW</h1>
 				<div id="VMW">-</div>
 			  </div>

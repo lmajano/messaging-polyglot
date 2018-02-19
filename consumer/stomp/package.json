@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "stompjs": "^2.3.3"
+  }
+}
