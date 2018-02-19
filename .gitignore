@@ -1,10 +1,9 @@
+# Consumer Dependencies
 /consumer/java/target/
+
 /consumer/node/nbproject/private/
 /consumer/stomp/AMQP Stomp Consumer/nbproject/private/
 /consumer/stomp/nbproject/private/
-/consumer/groovy/nbproject/private/
-/consumer/groovy/build/
-/consumer/groovy/dist/
 
 # Producer Dependencies
 /producer/java/target/
