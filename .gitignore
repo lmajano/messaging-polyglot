@@ -1,10 +1,17 @@
-/producer/java/target/
 /consumer/java/target/
 /consumer/node/nbproject/private/
-project.xml
-project.properties
 /consumer/stomp/AMQP Stomp Consumer/nbproject/private/
 /consumer/stomp/nbproject/private/
 /consumer/groovy/nbproject/private/
 /consumer/groovy/build/
 /consumer/groovy/dist/
+
+# Producer Dependencies
+/producer/java/target/
+/producer/commandbox/lib/amqp-client-*
+
+# IDE 
+.vscode
+.settings
+project.xml
+project.properties
