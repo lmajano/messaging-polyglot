@@ -1,15 +1,18 @@
 <cfscript>
 setting requesttimeout="999999";
-libs = directoryList( getDirectoryFromPath( getCurrentTemplatePath() ) & "/lib", false, "array", "*.jar" );
+libs = directoryList( getDirectoryFromPath( getCurrentTemplatePath() ) & "/lib", true, "array", "*.jar" );
+
 // create connection factory
 factory = createObject( "java", "com.rabbitmq.client.ConnectionFactory", libs ).init();
-factory.setUsername( "guest" );
-factory.setPassword( "guest" );
+factory.setUsername( "rabbitmq" );
+factory.setPassword( "rabbitmq" );
+
 // Create a shared connection for this application
 connection = factory.newConnection();
 // Create new channel for this interaction
 channel = connection.createChannel();
-// Crete Queue
+
+// Crete Queue To publish to
 channel.queueDeclare( 
 	"stock.prices", // Name
 	javaCast( "boolean", false ), // durable queue, persist restarts
@@ -17,19 +20,30 @@ channel.queueDeclare(
 	javaCast( "boolean", true ), // autodelete, server will delete if not in use
 	javaCast( "null", "" ) // other construction arguments
 );
+
 // Get a price generator
 priceGenerator = new lib.PriceGenerator();
-// Produce Price Quotes
-while( true ){
+
+// Produce 1000 messages
+count = 0;
+TOTAL_MESSAGES = 10;
+while( count++ < TOTAL_MESSAGES ){
 	price = priceGenerator.nextPrice();
-	systemOutput( "Producing: #price#" & chr(10) );
+	systemOutput( "==> (#count#) CommandBox Producing: #price#", true );
+	
 	// publish
 	variables.channel.basicPublish( 
-		"", // exchange
+		"", // exchange => default is direct exchange
 		"stock.prices", // routing key
 		javaCast( "null", "" ), // properties
-		price.getBytes() // message body
+		price.getBytes() // message body the price in bytes
 	);
+
+	// Take a nap
 	sleep( 200 );
 }
+
+// Close up connections
+channel.close();
+connection.close();
 </cfscript>

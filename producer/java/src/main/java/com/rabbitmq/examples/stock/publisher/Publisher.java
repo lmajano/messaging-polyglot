@@ -10,8 +10,8 @@ public class Publisher {
 		// Create a new ConnectionFactory
         ConnectionFactory factory = new ConnectionFactory();
 		// Setup the host's credentials, we use the default ones
-        factory.setUsername( "guest" );
-        factory.setPassword( "guest" );
+        factory.setUsername( "rabbitmq" );
+        factory.setPassword( "rabbitmq" );
 		
 		// Create a new connection and channel
         Connection connection	= factory.newConnection();

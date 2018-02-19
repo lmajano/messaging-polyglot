@@ -5,10 +5,10 @@ https://github.com/robharrop/presentations
 
 # Rabbit MQ
 In order to execute the examples you will need to have RabbitMQ Server
-installed: http://www.rabbitmq.com/
+installed: https://www.rabbitmq.com/
 
 For the STOMP example you will need to install the web-stomp plugin for
-RabbitMQ: http://www.rabbitmq.com/web-stomp.html
+RabbitMQ: https://www.rabbitmq.com/web-stomp.html
 
 # Start the Server
 Invoke the `sbin/rabbitmq-server` shell script. 
@@ -28,6 +28,7 @@ Install the managment plugin first
 More information at: https://www.rabbitmq.com/management.html
 
 ### RabbitMQ Admin URL
+
 http://localhost:15672/
 `guest:guest`
 

@@ -3,14 +3,13 @@ component{
 	this.name 					 = "RabbitMQ Producer";
 	this.mappings[ "/rabbitmq" ] = getDirectoryFromPath( getCurrentTemplatePath() );
 	this.javaSettings 			 = { loadPaths = [ "/rabbitmq/lib" ] };
-	this.applicationTimeout		 = createTimeSpan( 0, 0, 5, 0 );
-
+	
 	function onApplicationStart(){
 
 		// create connection factory
 		application.factory = createObject( "java", "com.rabbitmq.client.ConnectionFactory" ).init();
-		application.factory.setUsername( "guest" );
-		application.factory.setPassword( "guest" );
+		application.factory.setUsername( "rabbitmq" );
+		application.factory.setPassword( "rabbitmq" );
 		// Create a shared connection for this application
 		application.connection = application.factory.newConnection();
 
@@ -24,7 +23,9 @@ component{
 
 	function onRequestStart( required targetPage ){
 
-		if( structKeyExists( url, "reinit" ) ){ onApplicationStart(); }
+		if( structKeyExists( url, "reinit" ) ){ 
+			applicationstop();
+		}
 
 		return true;
 	}

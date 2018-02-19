@@ -1,7 +1,7 @@
 package com.rabbitmq.examples.stock.publisher;
 
-import com.rabbitmq.client.Channel;
 import java.io.IOException;
+import com.rabbitmq.client.Channel;
 
 final class PublishTask implements Runnable {
 	// The rabbitmq channel to connect to

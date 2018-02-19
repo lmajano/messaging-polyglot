@@ -1,0 +1,8 @@
+{
+    "dependencies":{
+        "amqp-client-5.1.2":"jar:http://central.maven.org/maven2/com/rabbitmq/amqp-client/5.1.2/amqp-client-5.1.2.jar"
+    },
+    "installPaths":{
+        "amqp-client-5.1.2":"lib/amqp-client-5.1.2"
+    }
+}

@@ -3,4 +3,4 @@ Java implementation of a simple stock ticker publisher using AMQP.
 Expects an AMQP-compliant broker to be running on localhost at port
 5672.
 
-Connects to the broker with username "guest" and password "guest".
+Connects to the broker with username "rabbitmq" and password "rabbitmq".
