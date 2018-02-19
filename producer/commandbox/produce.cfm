@@ -26,7 +26,7 @@ priceGenerator = new lib.PriceGenerator();
 
 // Produce 1000 messages
 count = 0;
-TOTAL_MESSAGES = 10;
+TOTAL_MESSAGES = 100;
 while( count++ < TOTAL_MESSAGES ){
 	price = priceGenerator.nextPrice();
 	systemOutput( "==> (#count#) CommandBox Producing: #price#", true );
