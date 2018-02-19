@@ -19,7 +19,7 @@ You can also start the server in **detached** mode with `rabbitmq-server -detach
 You can customise the RabbitMQ environment by setting environment variables in `$RABBITMQ_HOME/etc/rabbitmq/rabbitmq-env.conf`. Server components may be configured, too, in the RabbitMQ configuration file located at `$RABBITMQ_HOME/etc/rabbitmq/rabbitmq.config`. Neither of these files exist after installation.
 
 ## Default user access
-The broker creates a user `guest` with password `guest`. Unconfigured clients will in general use these credentials. By default, these credentials can only be used when connecting to the broker as `localhost` so you will need to take action before connecting fromn any other machine.
+The broker creates a user `guest` with password `guest`. Unconfigured clients will in general use these credentials. By default, these credentials can only be used when connecting to the broker as `localhost` so you will need to take action before connecting from any other machine.
 
 ## RabbitMQ Management Plugin
 Install the managment plugin first
