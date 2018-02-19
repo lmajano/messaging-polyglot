@@ -9,6 +9,7 @@
 # Producer Dependencies
 /producer/java/target/
 /producer/commandbox/lib/amqp-client-*
+/producer/cfml/lib/*
 
 # IDE 
 .vscode
