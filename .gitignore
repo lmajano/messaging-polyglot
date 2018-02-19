@@ -2,8 +2,7 @@
 /consumer/java/target/
 /consumer/commandbox/lib/amqp-client-*
 /consumer/stomp/node_modules/**
-
-/consumer/node/nbproject/private/
+/consumer/node/node_modules/**
 
 # Producer Dependencies
 /producer/java/target/

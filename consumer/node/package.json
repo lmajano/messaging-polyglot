@@ -1,0 +1,7 @@
+{
+	"name" : "NodeJS RabbitMQ Worker",
+	"version" : "1.0.0",
+	"dependencies": {
+		"amqplib": "^0.5.2"
+	}
+}
