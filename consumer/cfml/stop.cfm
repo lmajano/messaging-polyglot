@@ -1,5 +1,5 @@
 <cfscript>
-	application.stopProducer = true;
+	application.stopConsumer = true;
 	try{
 		application.channel.close();
 	}

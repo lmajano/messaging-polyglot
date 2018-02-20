@@ -1,29 +1,27 @@
 <cfscript>
-	application.stopProducer = false;
-	
+	application.stopConsumer = false;
+
 	// Create new channel for this interaction
 	application.channel = application.connection.createChannel();
 
 	// Crete Queue just in case
-	application.channel.queueDeclare( 
-		"stock.prices", 
-		javaCast( "boolean", false ), 
-		javaCast( "boolean", false ), 
-		javaCast( "boolean", true ), 
-		javaCast( "null", "" ) 
+	application.channel.queueDeclare(
+		"stock.prices",
+		javaCast( "boolean", false ),
+		javaCast( "boolean", false ),
+		javaCast( "boolean", true ),
+		javaCast( "null", "" )
 	);
 
-	// create runnable task
-	producerTask = createDynamicProxy( 
-		new models.ProducerTask( application.channel ), 
-		[ "java.lang.Runnable" ] 
+	// Prepare a push consumer
+	consumerTask = createDynamicProxy(
+		new lib.Consumer( channel ),
+		[ "com.rabbitmq.client.Consumer" ]
 	);
-	
-	// Create a new start for consuming
-    thread = createObject( "java", "java.lang.Thread" )
-    	.init( producerTask )
-    	.start();
-
+	// Consume Stream API
+	consumerTag = variables.channel.basicConsume( "stock.prices", false, consumerTask );
 </cfscript>
-<h1>Publisher started!</h1>
-<a href="stop.cfm">Stop Publisher</a>
+<cfoutput>
+<h1>Consumer started with consumer tag: #consumerTag#!</h1>
+<a href="stop.cfm">Stop Consumer</a>
+</cfoutput>
