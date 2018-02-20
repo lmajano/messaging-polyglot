@@ -40,17 +40,29 @@ component{
     function run(){
         print.greenBoldLine( " ==> Consumer started in the background." );
 
-		// Prepare a push consumer
-        var consumer = createDynamicProxy(
-            new lib.Consumer( channel ),
-            [ "com.rabbitmq.client.Consumer" ]
-		);
-		// Consume Stream API
-		var consumerTag = variables.channel.basicConsume( variables.queueName, false, consumer );
+		try{
+			// Prepare a push consumer
+			var consumer = createDynamicProxy(
+				new lib.Consumer( channel ),
+				[ "com.rabbitmq.client.Consumer" ]
+			);
+			// Consume Stream API
+			var consumerTag = variables.channel.basicConsume( variables.queueName, false, consumer );
 
-		// Output
-		print.blue( "RabbitMQ Consumer Tag Generated: ")
-			.greenline( consumerTag );
+			// Output
+			print.blue( "RabbitMQ Consumer Tag Generated: ")
+				.greenline( consumerTag )
+				.toConsole();
+
+			while( true ){
+				// Block until I cancel my task
+				sleep( 500 );
+			}
+		} finally{
+			variables.channel.basicCancel( consumerTag );
+			variables.channel.close();
+			variables.connection.close();
+		}
 	}
 
 }

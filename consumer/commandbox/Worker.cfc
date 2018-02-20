@@ -32,17 +32,22 @@ component{
 
     function run(){
         SystemOutput( " [*] Waiting for messages. To exit press CTRL+C", true );
+        try{
+			while( true ){
+				// Go fetch
+				var response = channel.basicGet( "stock.prices", false );
 
-        while( true ){
-            // Go fetch
-            var response = channel.basicGet( "stock.prices", false );
+				if( !isNull( response ) ){
+					SystemOutput( "Got #response.getBody()#", true );
+				}
 
-            if( !isNull( response ) ){
-                SystemOutput( "Got #response.getBody()#", true );
-            }
-
-            // sleep a bit and wait some more
-            sleep( 200 );
-        }
+				// sleep a bit and wait some more
+				sleep( 200 );
+			}
+		} finally {
+			systemOutput( "Closing connections down" );
+			channel.close();
+			connection.close();
+		}
     }
 }

@@ -21,7 +21,7 @@ component{
         // Queue name
         QUEUE_NAME = "stock.prices";
         // Crete Queue To publish to
-        channel.queueDeclare( 
+        channel.queueDeclare(
             QUEUE_NAME, // Name
             javaCast( "boolean", false ), // durable queue, persist restarts
             javaCast( "boolean", false ), // Exclusive queue, restricted to this connection
@@ -36,27 +36,31 @@ component{
      * @num How many messages to send
      */
     function run( num=100 ){
-        // Produce messages
-        var count = 0;
-        while( count++ < arguments.num ){
-            var price = priceGenerator.nextPrice();
-            systemOutput( "==> (#count#) CommandBox Producing: #price#", true );
-            
-            // publish
-            variables.channel.basicPublish( 
-                "", // exchange => default is direct exchange
-                QUEUE_NAME, // routing key
-                javaCast( "null", "" ), // properties
-                price.getBytes() // message body the price in bytes
-            );
+		try{
+			// Produce messages
+			var count = 0;
+			while( count++ < arguments.num ){
+				var price = priceGenerator.ddnextPrice();
+				print.greenLine( "==> (#count#) CommandBox Producing: #price#" ).toConsole();
 
-            // Take a nap
-            sleep( 200 );
-        }
+				// publish
+				variables.channel.basicPublish(
+					"", // exchange => default is direct exchange
+					QUEUE_NAME, // routing key
+					javaCast( "null", "" ), // properties
+					price.getBytes() // message body the price in bytes
+				);
 
-        // Close up connections
-        channel.close();
-        connection.close();
+				// Take a nap
+				sleep( 200 );
+			}
+		} finally{
+			print.redLine( "Closing down channel + connection" ).toConsole();
+			// Close up connections
+			channel.close();
+			connection.close();
+		}
+
     }
 
 }
