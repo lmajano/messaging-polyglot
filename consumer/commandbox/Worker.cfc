@@ -1,3 +1,6 @@
+/**
+ * Polling connection worker
+ */
 component{
 
     function init(){
@@ -18,7 +21,7 @@ component{
         channel = connection.createChannel();
 
         // Crete Queue we are consuming from
-        channel.queueDeclare( 
+        channel.queueDeclare(
             "stock.prices", // Name
             javaCast( "boolean", false ), // durable queue, persist restarts
             javaCast( "boolean", false ), // Exclusive queue, restricted to this connection
