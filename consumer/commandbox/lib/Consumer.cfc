@@ -1,7 +1,15 @@
+/**
+ * This class will implement com.rabbitmq.client.Consumer
+ * https://rabbitmq.github.io/rabbitmq-java-client/api/current/com/rabbitmq/client/Consumer.html
+ * Interface for application callback objects to receive notifications and messages from a queue by subscription.
+ */
 component accessors="true"{
 
     /**
      * Constructor
+     *
+     * @channel RabbitMQ Connection Channel https://rabbitmq.github.io/rabbitmq-java-client/api/current/com/rabbitmq/client/Channel.html
+     * @consumerTag The consumer tag associated with the consumer
      */
     function init( required channel, consumerTag = "" ){
         variables.channel       = arguments.channel;
@@ -23,7 +31,10 @@ component accessors="true"{
      * @param consumerTag the defined consumer tag (client- or server-generated)
      */
     public void function handleCancelOk( String consumerTag ){
-        // no work to do
+		// Cancelled Consumer
+		systemOutput( "Consumer cancelled!", true );
+		// Close the channel
+		variables.channel.close();
     }
 
      /**
@@ -37,17 +48,17 @@ component accessors="true"{
      /**
      * No-op implementation of {@link Consumer#handleDelivery}.
      */
-    public void function handleDelivery( 
+    public void function handleDelivery(
         consumerTag,
         envelope,
         properties,
         body
     ){
         systemOutput( " [x] Received #body# ", true );
-        
+
         // Basic Ack
         channel.basicAck( envelope.getDeliveryTag(), false );
-        systemOutput( " [x] Done", true );
+        systemOutput( " [x] Task Done", true );
     }
 
     /**
