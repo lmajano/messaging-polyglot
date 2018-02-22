@@ -1,14 +1,23 @@
+/**
+ * This is a RabbitMQ Producer Task you can execute it like so:
+ * {code}
+ * // Send default of 100 messages
+ * task run Produce
+ * // Send 10 messages
+ * task run Produce 10
+ * {code}
+ */
 component{
 
     function init(){
         // Load RabbbitMQ Libraries
-        directoryList( getDirectoryFromPath( getCurrentTemplatePath() ) & "/lib", true, "array", "*.jar" )
-            .each( function( item ){
-                loadJar( item );
-            } );
+        directoryList( getCWD() & "/lib", true, "array", "*.jar" )
+			.each(
+				( item ) => loadJar( item )
+			);
 
         // create connection factory
-        factory = createObject( "java", "com.rabbitmq.client.ConnectionFactory" ).init();
+        var factory = createObject( "java", "com.rabbitmq.client.ConnectionFactory" ).init();
         factory.setUsername( "rabbitmq" );
         factory.setPassword( "rabbitmq" );
 
@@ -22,17 +31,16 @@ component{
         QUEUE_NAME = "stock.prices";
         // Crete Queue To publish to
         channel.queueDeclare(
-            QUEUE_NAME, // Name
-            javaCast( "boolean", false ), // durable queue, persist restarts
-            javaCast( "boolean", false ), // Exclusive queue, restricted to this connection
-            javaCast( "boolean", true ), // autodelete, server will delete if not in use
-            javaCast( "null", "" ) // other construction arguments
+            QUEUE_NAME, // Queue Name for bindings
+            false, // durable queue, persist restarts
+            false, // Exclusive queue, restricted to this connection
+            true, // autodelete, server will delete if not in use
+            nullValue() // other construction arguments
         );
     }
 
     /**
-     * Run the task
-     *
+     * Send messages to RabbitMQ
      * @num How many messages to send
      */
     function run( num=100 ){
@@ -40,18 +48,18 @@ component{
 			// Produce messages
 			var count = 0;
 			while( count++ < arguments.num ){
-				var price = priceGenerator.ddnextPrice();
+				var price = priceGenerator.nextPrice();
 				print.greenLine( "==> (#count#) CommandBox Producing: #price#" ).toConsole();
 
-				// publish
-				variables.channel.basicPublish(
+				// Rabbit MQ Publish
+				channel.basicPublish(
 					"", // exchange => default is direct exchange
 					QUEUE_NAME, // routing key
-					javaCast( "null", "" ), // properties
+					nullValue(), // properties
 					price.getBytes() // message body the price in bytes
 				);
 
-				// Take a nap
+				// Take a nap before producing another price
 				sleep( 200 );
 			}
 		} finally{

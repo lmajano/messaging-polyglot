@@ -27,10 +27,10 @@ component{
         // Crete Queue we are consuming from
         variables.channel.queueDeclare(
             variables.queueName, // Name
-            javaCast( "boolean", false ), // durable queue, persist restarts
-            javaCast( "boolean", false ), // Exclusive queue, restricted to this connection
-            javaCast( "boolean", true ), // autodelete, server will delete if not in use
-            javaCast( "null", "" ) // other construction arguments
+            false, // durable queue, persist restarts
+            false, // Exclusive queue, restricted to this connection
+            true, // autodelete, server will delete if not in use
+            nullValue() // other construction arguments
         );
     }
 
