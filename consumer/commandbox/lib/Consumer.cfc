@@ -33,8 +33,6 @@ component accessors="true"{
     public void function handleCancelOk( String consumerTag ){
 		// Cancelled Consumer
 		systemOutput( "Consumer cancelled!", true );
-		// Close the channel
-		variables.channel.close();
     }
 
      /**

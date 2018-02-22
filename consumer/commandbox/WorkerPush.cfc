@@ -8,25 +8,25 @@ component{
 	 */
     function init(){
         // Load RabbbitMQ Libraries
-        directoryList( getDirectoryFromPath( getCurrentTemplatePath() ) & "/lib", true, "array", "*.jar" )
-            .each( function( item ){
-                loadJar( item );
-            } );
+        directoryList( getCWD() & "/lib", true, "array", "*.jar" )
+			.each(
+				( item ) => loadJar( item )
+			);
 
         // create connection factory
-        variables.factory = createObject( "java", "com.rabbitmq.client.ConnectionFactory" ).init();
-        variables.factory.setUsername( "rabbitmq" );
-        variables.factory.setPassword( "rabbitmq" );
+        var factory = createObject( "java", "com.rabbitmq.client.ConnectionFactory" ).init();
+        factory.setUsername( "rabbitmq" );
+        factory.setPassword( "rabbitmq" );
 
         // Create a shared connection for this application
-        variables.connection = factory.newConnection( "commandbox-task" );
+        connection = factory.newConnection( "commandbox-task" );
         // Create new channel for this interaction
-        variables.channel = connection.createChannel();
+        channel = connection.createChannel();
 		// The Queue Name
-		variables.queueName = "stock.prices";
+		QUEUE_NAME = "stock.prices";
         // Crete Queue we are consuming from
-        variables.channel.queueDeclare(
-            variables.queueName, // Name
+        channel.queueDeclare(
+            QUEUE_NAME, // Name
             false, // durable queue, persist restarts
             false, // Exclusive queue, restricted to this connection
             true, // autodelete, server will delete if not in use
@@ -38,7 +38,7 @@ component{
 	 * Run the task
 	 */
     function run(){
-        print.greenBoldLine( " ==> Consumer started in the background." );
+        print.greenBoldLine( " ==> Consumer started in the background." ).toConsole();
 
 		try{
 			// Prepare a push consumer
@@ -46,8 +46,8 @@ component{
 				new lib.Consumer( channel ),
 				[ "com.rabbitmq.client.Consumer" ]
 			);
-			// Consume Stream API
-			var consumerTag = variables.channel.basicConsume( variables.queueName, false, consumer );
+			// Consume with the Stream API
+			var consumerTag = channel.basicConsume( QUEUE_NAME, false, consumer );
 
 			// Output
 			print.blue( "RabbitMQ Consumer Tag Generated: ")
@@ -55,13 +55,14 @@ component{
 				.toConsole();
 
 			while( true ){
-				// Block until I cancel my task
-				sleep( 500 );
+				// Monitor the consumer until I finish my task
+				sleep( 300 );
 			}
 		} finally{
-			variables.channel.basicCancel( consumerTag );
-			variables.channel.close();
-			variables.connection.close();
+			print.redline( "Closing connections down" ).toConsole();
+			channel.basicCancel( consumerTag );
+			channel.close();
+			connection.close();
 		}
 	}
 

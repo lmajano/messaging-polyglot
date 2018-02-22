@@ -5,13 +5,13 @@ component{
 
     function init(){
         // Load RabbbitMQ Libraries
-        directoryList( getDirectoryFromPath( getCurrentTemplatePath() ) & "/lib", true, "array", "*.jar" )
-            .each( function( item ){
-                loadJar( item );
-            } );
+        directoryList( getCWD() & "/lib", true, "array", "*.jar" )
+			.each(
+				( item ) => loadJar( item )
+			);
 
         // create connection factory
-        factory = createObject( "java", "com.rabbitmq.client.ConnectionFactory" ).init();
+        var factory = createObject( "java", "com.rabbitmq.client.ConnectionFactory" ).init();
         factory.setUsername( "rabbitmq" );
         factory.setPassword( "rabbitmq" );
 
@@ -19,10 +19,11 @@ component{
         connection = factory.newConnection();
         // Create new channel for this interaction
         channel = connection.createChannel();
-
+		// Queue name
+        QUEUE_NAME = "stock.prices";
         // Crete Queue we are consuming from
         channel.queueDeclare(
-            "stock.prices", // Name
+            QUEUE_NAME, // Name
             false, // durable queue, persist restarts
             false, // Exclusive queue, restricted to this connection
             true, // autodelete, server will delete if not in use
@@ -31,21 +32,21 @@ component{
     }
 
     function run(){
-        SystemOutput( " [*] Waiting for messages. To exit press CTRL+C", true );
+        print.blueLine( " [*] Waiting for messages. To exit press CTRL+C" ).toConsole();
         try{
 			while( true ){
 				// Go fetch
-				var response = channel.basicGet( "stock.prices", false );
+				var response = channel.basicGet( QUEUE_NAME, false );
 
 				if( !isNull( response ) ){
-					SystemOutput( "Got #response.getBody()#", true );
+					print.boldGreenLine( "=> Got #response.getBody()#" ).toConsole();
 				}
 
 				// sleep a bit and wait some more
-				sleep( 200 );
+				sleep( 300 );
 			}
 		} finally {
-			systemOutput( "Closing connections down" );
+			print.redline( "Closing connections down" ).toConsole();
 			channel.close();
 			connection.close();
 		}
