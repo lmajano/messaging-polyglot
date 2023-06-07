@@ -2,7 +2,7 @@ component{
 
 	this.name 					 = "RabbitMQ Producer";
 	this.mappings[ "/rabbitmq" ] = getDirectoryFromPath( getCurrentTemplatePath() );
-	this.javaSettings 			 = { loadPaths = [ "/lib/amqp-client-5.1.2" ] };
+	this.javaSettings 			 = { loadPaths = [ "/lib/amqp-client-5.17.0" ] };
 
 	function onApplicationStart(){
 

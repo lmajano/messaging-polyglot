@@ -10,7 +10,7 @@ component{
         // Load RabbbitMQ Libraries
         directoryList( getCWD() & "/lib", true, "array", "*.jar" )
 			.each(
-				( item ) => loadJar( item )
+				( item ) => classLoad( item )
 			);
 
         // create connection factory

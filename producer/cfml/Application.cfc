@@ -2,8 +2,8 @@ component{
 
 	this.name 					 = "RabbitMQ Producer";
 	this.mappings[ "/rabbitmq" ] = getDirectoryFromPath( getCurrentTemplatePath() );
-	this.javaSettings 			 = { loadPaths = [ "/lib/amqp-client-5.1.2" ] };
-	
+	this.javaSettings 			 = { loadPaths = [ "/lib/amqp-client-5.17.0" ] };
+
 	function onApplicationStart(){
 
 		// create connection factory
@@ -23,7 +23,7 @@ component{
 
 	function onRequestStart( required targetPage ){
 
-		if( structKeyExists( url, "reinit" ) ){ 
+		if( structKeyExists( url, "reinit" ) ){
 			applicationstop();
 		}
 

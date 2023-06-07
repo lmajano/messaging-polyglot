@@ -1,23 +1,25 @@
-rabbit1:
-  # Latest Image with management
-  image: "rabbitmq:3-management"
-  # Have a unique hostname so rabbit can track this node, else randomness ensues
-  hostname: "rabbit1"
-  # Env Variables
-  environment:
-    RABBITMQ_ERLANG_COOKIE: "SUPER_SECRET_COOKIE"
-    RABBITMQ_DEFAULT_USER: "rabbitmq"
-    RABBITMQ_DEFAULT_PASS: "rabbitmq"
-    RABBITMQ_DEFAULT_VHOST: "/"
-  ports:
-    # Admin Management Port
-    - "15672:15672"
-    # WS Stop Port
-    - "15674:15674"
-    # MQ Container Port
-    - "5672:5672"
-  # Volume Mounts
-  volumes:
-    - "./enabled_plugins:/etc/rabbitmq/enabled_plugins"
-    #- "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro"
-    #- "./autocluster-0.4.1.ez:/usr/lib/rabbitmq/lib/rabbitmq_server-3.5.5/plugins/autocluster-0.4.1.ez"
+version: '3'
+services:
+  rabbit1:
+    # Latest Image with management
+    image: "rabbitmq:3-management"
+    # Have a unique hostname so rabbit can track this node, else randomness ensues
+    hostname: "rabbit1"
+    # Env Variables
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SUPER_SECRET_COOKIE"
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      # Admin Management Port
+      - "15672:15672"
+      # WS Stop Port
+      - "15674:15674"
+      # MQ Container Port
+      - "5672:5672"
+    # Volume Mounts
+    volumes:
+      - "./enabled_plugins:/etc/rabbitmq/enabled_plugins"
+      #- "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro"
+      #- "./autocluster-0.4.1.ez:/usr/lib/rabbitmq/lib/rabbitmq_server-3.5.5/plugins/autocluster-0.4.1.ez"
