@@ -23,5 +23,6 @@
 </cfscript>
 <cfoutput>
 <h1>Consumer started with consumer tag: #consumerTag#!</h1>
+<p>All output directed to the console!</p>
 <a href="stop.cfm">Stop Consumer</a>
 </cfoutput>
